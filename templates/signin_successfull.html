@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign In Successfull</title>  
+    {% include 'bootstrap.html' %}
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center mt-2 mb-4">
+        My MFR
+      </h1>
+
+      <p>O perfil de médico foi criado com sucesso</p>
+
+      <b>Nome Completo</b>
+      <div class="mb-2">{{application['nome']}} {{application['apelido']}}</div>
+
+      <b>Email</b>
+      <div class="mb-2">{{application['email']}}</div>
+
+      <b>Morada</b>
+      <div class="mb-2">{{application['morada']}}</div>
+
+      <b>País</b>
+      <div class="mb-2">{{application['pais']}}</div>
+
+      <b>Distrito</b>
+      <div class="mb-2">{{application['distrito']}}</div>
+
+      <b>Código Postal</b>
+      <div class="mb-2">{{application['codigo_postal']}}</div>
+    </div>
+    <div>
+      <a href="/" type="button" class="btn btn-outline-primary float-right align-middle" >Voltar</a>
+    </div>
+  </body>
+</html>
