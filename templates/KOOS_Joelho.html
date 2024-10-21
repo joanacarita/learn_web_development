@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign In Successfull</title>  
+    {% include 'bootstrap.html' %}
+  </head>
+  <body>
+      <div class="result" >
+        {% for num_perg, perg in radio_options.items() %}   
+        <div >
+            {{perg.pergunta}}
+            <br>
+            {% for i in range(perg.opcoes.name|length) %}             
+                <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="exampleRadios" id= "{{'exampleRadios'~perg.opcoes.value[i]}}" value="{{perg.opcoes.value[i]}}" checked>
+                <label class="form-check-label" for="{{'exampleRadios'~perg.opcoes.value[i]}}">
+                  {{perg.opcoes.name[i]}}
+                </label>
+              </div>
+            {% endfor %}
+            <br>
+        </div>
+        {% endfor %}
+    </div>
+  </body>
+</html>

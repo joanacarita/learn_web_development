@@ -1,11 +1,12 @@
 from flask import Flask, jsonify, render_template, request
-from database import *
+from scripts.database import *
+from scripts.constantes import *
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return render_template("home.html")
+    return render_template("home.html", radio_options = const_koos_12_crf())
 
 @app.route("/signincomplete", methods=['post'])
 def signin():
