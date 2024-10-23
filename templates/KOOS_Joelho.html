@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sign In Successfull</title>  
+    <title>QUESTIONÁRIO KOOS SOBRE O JOELHO</title>  
     {% include 'bootstrap.html' %}
   </head>
   <body>
+    <form action="/guardar_quest" method="post">
+
+      <div class="col-12" style="display: none;">
+        <label for="nome_questionario" class="form-label">Nome Questionário </label>
+        <input type="text" class="form-control" name="nome_questionario" id="nome_questionario" placeholder="KOOS Joelho"> 
+      </div>
+
+      <script type="text/javascript">
+        document.getElementById('nome_questionario').value = 'KOOS Joelho';
+      </script>
+
+      <select name="dropdown_user_id">
+        {% for key, value in users.items() %}
+            <option value="{{ value.id }}">{{ value.nome~ ' '~value.apelido }}</option>
+        {% endfor %}
+      </select>
+
       <div class="result" >
         {% for num_perg, perg in radio_options.items() %}   
         <div >
             {{perg.pergunta}}
             <br>
             {% for i in range(perg.opcoes.name|length) %}             
-                <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id= "{{'exampleRadios'~perg.opcoes.value[i]}}" value="{{perg.opcoes.value[i]}}" checked>
-                <label class="form-check-label" for="{{'exampleRadios'~perg.opcoes.value[i]}}">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="{{'radioOption'~perg.num_pergunta}}" id= "{{'radioOption'~perg.num_pergunta~perg.opcoes.value[i]}}" value="{{perg.opcoes.value[i]}}">
+                <label class="form-check-label" for="{{'radioOption'~perg.num_pergunta~perg.opcoes.value[i]}}">
                   {{perg.opcoes.name[i]}}
                 </label>
               </div>
@@ -21,6 +38,11 @@
             <br>
         </div>
         {% endfor %}
-    </div>
+      </div>
+
+      <hr class="my-4">
+
+      <button class="w-100 btn btn-primary btn-lg" type="submit">Guardar</button>
+    </form>
   </body>
 </html>

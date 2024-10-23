@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Questionário submetido com sucesso</title>  
+    {% include 'bootstrap.html' %}
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center mt-2 mb-4">
+        My MFR
+      </h1>
+
+      <p>O questionário {{application["nome_questionario"]}} foi submetido com sucesso</p>
+
+    </div>
+    <div>
+      <a href="/" type="button" class="btn btn-outline-primary float-right align-middle" >Voltar</a>
+    </div>
+  </body>
+</html>

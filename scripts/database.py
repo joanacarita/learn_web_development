@@ -5,13 +5,24 @@ url: str = 'https://rmifubwuwvkiawgakwno.supabase.co'
 key: str = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtaWZ1Ynd1d3ZraWF3Z2Frd25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg4MTcwNDksImV4cCI6MjA0NDM5MzA0OX0.6ZDINmoFFgYVzEENBaGyWB1XfMjqBqbgURsNC8SbEoQ'
 supabase: Client = create_client(url, key)
 
-def read_medico():
-    return supabase.table("utilizadores").select("*").execute()
+def read_users():
+    result = supabase.table("utilizadores").select("id", "nome", "apelido").execute()
+
+    new_dict = {}
+    count = 1
+    
+    for user in result.data:
+       key = f'user_{count}'
+       new_dict[key] = user
+       count = count + 1
+
+    return new_dict
 
 # custom_schema_query = """
 # GRANT USAGE ON SCHEMA mfr_questionarios TO anon, authenticated, service_role;
 # """
 # supabase.rpc("execute_sql", {"sql": custom_schema_query}).execute()
+# supabase.table("utilizadores").select("id", "nome").execute()
 
 def write_medico_to_db(data):
   response = (
@@ -28,6 +39,27 @@ def write_medico_to_db(data):
     .execute()
   )
 
+def write_respostas_quest_to_db(data):
+
+  list_to_insert = []
+  dropdown_user_id = data["dropdown_user_id"]
+  quest_nome = data["nome_questionario"]
+
+  for key, value in data.items():
+    if 'radioOption' in key:
+      new_dict = {}
+      new_dict["user_id"] = dropdown_user_id
+      new_dict["quest_nome"] = quest_nome
+      new_dict["num_pergunta"] = key[-1]
+      new_dict["valor_resposta"] = value
+      list_to_insert.append(new_dict)
+
+  response = (
+    supabase.table("quest_respostas")
+    .insert(list_to_insert)
+    .execute()
+  )
+  
 
 # rows = response.data
 
