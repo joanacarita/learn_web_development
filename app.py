@@ -6,7 +6,15 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return render_template("home.html", radio_options = const_koos_12_crf(), users = read_users())
+    return render_template("home.html")
+
+@app.route("/signin")
+def registo_inicial():
+    return render_template("signin.html")
+
+@app.route("/formulario_koos")
+def formulario_koos():
+    return render_template("KOOS_Joelho.html", radio_options = const_koos_12_crf(), users = read_users())
 
 @app.route("/signincomplete", methods=['post'])
 def signin():
