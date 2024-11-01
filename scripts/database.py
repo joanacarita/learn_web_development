@@ -6,7 +6,7 @@ key: str = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI
 supabase: Client = create_client(url, key)
 
 def read_users():
-    result = supabase.table("utilizadores").select("id", "nome", "apelido").execute()
+    result = supabase.table("medicos").select("id", "nome", "apelido").execute()
 
     new_dict = {}
     count = 1
@@ -22,11 +22,11 @@ def read_users():
 # GRANT USAGE ON SCHEMA mfr_questionarios TO anon, authenticated, service_role;
 # """
 # supabase.rpc("execute_sql", {"sql": custom_schema_query}).execute()
-# supabase.table("utilizadores").select("id", "nome").execute()
+# supabase.table("medicos").select("id", "nome").execute()
 
 def write_doctor_to_db(data):
   response = (
-    supabase.table("utilizadores")
+    supabase.table("medicos")
     .insert({
       "nome": data["firstName"], 
       "apelido": data["lastName"],

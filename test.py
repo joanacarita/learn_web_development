@@ -6,7 +6,7 @@ key: str = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI
 supabase: Client = create_client(url, key)
 
 def read_users():
-    result = supabase.table("utilizadores").select("id", "nome").execute()
+    result = supabase.table("medicos").select("id", "nome").execute()
 
     new_dict = {}
     count = 1
