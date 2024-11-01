@@ -24,18 +24,30 @@ def read_users():
 # supabase.rpc("execute_sql", {"sql": custom_schema_query}).execute()
 # supabase.table("utilizadores").select("id", "nome").execute()
 
-def write_medico_to_db(data):
+def write_doctor_to_db(data):
   response = (
     supabase.table("utilizadores")
     .insert({
-      "nome": data["nome"], 
-      "apelido": data["apelido"],
+      "nome": data["firstName"], 
+      "apelido": data["lastName"],
+      "numero_ordem": data["docID"],
       "email": data["email"],
-      "morada": data["morada"],
-      "morada_2": data["morada_2"],
-      "pais": data["pais"],
-      "distrito": data["distrito"],
-      "codigo_postal": data["codigo_postal"]})
+      "local_trabalho": data["hospitalAdress"]})
+    .execute()
+  )
+
+def write_patient_to_db(data):
+  response = (
+    supabase.table("utentes")
+    .insert({
+      "nome": data["firstName"], 
+      "apelido": data["lastName"],
+      "numero_utente": data["patientID"],
+      "email": data["email"],
+      "data_nascimento": data["patientBirthday"],
+      "sexo": data["patientSex"],
+      "peso": data["patientWeight"],
+      "altura": data["patientHeight"]})
     .execute()
   )
 

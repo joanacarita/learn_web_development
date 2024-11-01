@@ -8,20 +8,36 @@ app = Flask(__name__)
 def hello_world():
     return render_template("home.html")
 
-@app.route("/signin")
-def registo_inicial():
-    return render_template("signin.html")
+######################## DOCTOR ###############################
+@app.route("/doctor_signin")
+def doctor_signin():
+    return render_template("doctor_signin.html")
+
+@app.route("/doctor_signin_complete", methods=['post'])
+def doctor_signin_complete():
+    data = request.form
+    write_doctor_to_db(data)
+    return render_template('doctor_signin_successfull.html', 
+         application=data)
+
+######################## PATIENT ###############################
+
+@app.route("/patient_register")
+def patient_register():
+    return render_template("patient_register.html")
+
+@app.route("/patient_register_complete", methods=['post'])
+def patient_register_complete():
+    data = request.form
+    write_patient_to_db(data)
+    return render_template('patient_register_successfull.html', 
+         application=data)
+
+######################## FORMS ###############################
 
 @app.route("/formulario_koos")
 def formulario_koos():
     return render_template("KOOS_Joelho.html", radio_options = const_koos_12_crf(), users = read_users())
-
-@app.route("/signincomplete", methods=['post'])
-def signin():
-    data = request.form
-    write_medico_to_db(data)
-    return render_template('signin_successfull.html', 
-         application=data)
 
 @app.route("/guardar_quest", methods=['post'])
 def guardarQuest():

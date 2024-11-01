@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Registo de Utente com sucesso</title>  
+    {% include 'bootstrap.html' %}
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center mt-2 mb-4">
+        My MFR
+      </h1>
+
+      <p>O perfil de utente foi criado com sucesso</p>
+
+      <b>Nome Completo</b>
+      <div class="mb-2">{{application['firstName']}} {{application['lastName']}}</div>
+
+      <b>Número de Utente</b>
+      <div class="mb-2">{{application['pacientID']}}</div>
+
+      <b>Email</b>
+      <div class="mb-2">{{application['email']}}</div>
+
+      <b>Data de Nascimento</b>
+      <div class="mb-2">{{application['patientBirthday']}}</div>
+
+      <b>Sexo</b>
+      <div class="mb-2">{{application['patientSex']}}</div>
+
+      <b>Peso</b>
+      <div class="mb-2">{{application['patientWeight']}}</div>
+
+      <b>Altura</b>
+      <div class="mb-2">{{application['patientHeight']}}</div>
+      
+    </div>
+    <div>
+      <a href="/" type="button" class="btn btn-outline-primary float-right align-middle" >Voltar</a>
+    </div>
+  </body>
+</html>

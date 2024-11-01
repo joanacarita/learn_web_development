@@ -13,22 +13,17 @@
       <p>O perfil de médico foi criado com sucesso</p>
 
       <b>Nome Completo</b>
-      <div class="mb-2">{{application['nome']}} {{application['apelido']}}</div>
+      <div class="mb-2">{{application['firstName']}} {{application['lastName']}}</div>
+
+      <b>Número da Ordem</b>
+      <div class="mb-2">{{application['docID']}}</div>
 
       <b>Email</b>
       <div class="mb-2">{{application['email']}}</div>
 
-      <b>Morada</b>
-      <div class="mb-2">{{application['morada']}}</div>
-
-      <b>País</b>
-      <div class="mb-2">{{application['pais']}}</div>
-
-      <b>Distrito</b>
-      <div class="mb-2">{{application['distrito']}}</div>
-
-      <b>Código Postal</b>
-      <div class="mb-2">{{application['codigo_postal']}}</div>
+      <b>Local de Trabalho</b>
+      <div class="mb-2">{{application['hospitalAdress']}}</div>
+      
     </div>
     <div>
       <a href="/" type="button" class="btn btn-outline-primary float-right align-middle" >Voltar</a>

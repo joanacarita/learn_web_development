@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My MFR</title>  
+    {% include 'bootstrap.html' %}
+  </head>  
+  <body>
+    <div class="container">
+        <div class="py-5 text-center">
+          <img class="d-block mx-auto mb-4" alt="" width="72" height="57">
+          <h2>Registo de Utente</h2>
+          <p class="lead">Registo de Utente</p>
+        </div>
+        <div class="row g-5">      
+          <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Informação pessoal</h4>
+            <form id= "patient_register" action="/patient_register_complete" onsubmit="return validateForm()" method="post" class="needs-validation">
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label for="firstName" class="form-label">Nome</label>
+                  <input type="text" class="form-control" name="firstName" placeholder="Ana" value="" required>
+                  <div class="invalid-feedback">
+                    Primeiro nome válido.
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label for="lastName" class="form-label">Apelido</label>
+                  <input type="text" class="form-control" name="lastName" placeholder="Monteiro" value="" required>
+                  <div class="invalid-feedback">
+                    Apelido válido.
+                  </div>
+                </div>
+                
+                <div class="col-12">
+                  <label for="patientID" class="form-label">Número de Utente</label>
+                  <input type="number" class="form-control" name="patientID" id="ID_patientID" onkeyup=check_patientID() placeholder="123456789"  maxlength= "9" required>
+                  <div class="invalid-feedback" id="ID_patientID_warning" style="display: none;">O número da Utente tem de ter 9 dígitos</pre>                
+                </div>
+
+                <script>
+                  function check_patientID() {
+                      stringLength = document.getElementById('ID_patientID').value.length;
+                      if (stringLength > 9) {
+                          document.getElementById("ID_patientID_warning").style.display = "block";
+                      } else {
+                        document.getElementById("ID_patientID_warning").style.display = "none";
+
+                      }
+                  }
+                </script>
+
+                <div class="col-12">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" name="email" placeholder="utilizador@exemplo.com" required>
+                  <div class="invalid-feedback">
+                    E-mail válido.
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label for="patientBirthday" class="form-label">Local de Trabalho</label>
+                  <input type="date" class="form-control" name="patientBirthday" placeholder="09-09-1994">
+                  <div class="invalid-feedback">
+                    Data de Nascimento válida
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="patientSex" class="form-label">Sexo</label>
+                  <select class="form-select" name="patientSex" required>
+                    <option value="">Selecionar...</option>
+                    <option>Feminino</option>
+                    <option>Masculino</option>
+                    <option>Outro</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Selecionar uma opção.
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="patientWeight" class="form-label">Peso</label>
+                    <input type="number" class="form-control" name="patientWeight" placeholder="55" value="">
+                    <div class="invalid-feedback">
+                        Peso válido.
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="patientHeight" class="form-label">Altura</label>
+                    <input type="number" class="form-control" name="patientHeight" placeholder="160" value="">
+                    <div class="invalid-feedback">
+                        Altura válida.
+                    </div>
+                </div>
+
+              </div>
+
+              <hr class="my-4">
+
+              <button class="w-100 btn btn-primary btn-lg" type="submit">Guardar</button>
+            </form>
+
+            <script>
+              function validateForm() {
+                  ID_patientID_Length = document.getElementById('ID_patientID').value.length;
+                  if (ID_patientID_Length < 5) {
+                      document.getElementById("ID_patientID_warning").style.display = "block";
+                      return false
+                  } else {
+                    document.getElementById("ID_patientID_warning").style.display = "none";
+                    return true
+                  }
+              }
+            </script>
+
+          </div>
+        </div>
+    </div>
+  </body>
+</html>
