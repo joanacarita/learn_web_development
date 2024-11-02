@@ -18,6 +18,16 @@ def read_users():
 
     return new_dict
 
+def log_in():
+    result = supabase.table("medicos").select("*").eq("email","ca@df.com").execute()
+    user = result.data
+    result_dict = {}
+
+    for d in user:
+        result_dict.update(d)
+
+    return result_dict['password']
+
 
 if __name__ == "__main__":
-    print(read_users())
+    print(log_in())

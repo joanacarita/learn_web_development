@@ -1,12 +1,13 @@
 import os
 from supabase import create_client, Client
+from werkzeug.security import generate_password_hash, check_password_hash
 
 url: str = 'https://rmifubwuwvkiawgakwno.supabase.co'
 key: str = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtaWZ1Ynd1d3ZraWF3Z2Frd25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg4MTcwNDksImV4cCI6MjA0NDM5MzA0OX0.6ZDINmoFFgYVzEENBaGyWB1XfMjqBqbgURsNC8SbEoQ'
 supabase: Client = create_client(url, key)
 
 def read_users():
-    result = supabase.table("medicos").select("id", "nome", "apelido").execute()
+    result = supabase.table("utentes").select("id", "nome", "apelido").execute()
 
     new_dict = {}
     count = 1
@@ -18,6 +19,44 @@ def read_users():
 
     return new_dict
 
+def read_doctors():
+
+  result = supabase.table("medicos").select("*").execute()
+
+  doctor = result.data
+  new_dict = {}
+  count = 1
+  
+  for doctor in result.data:
+      key = doctor['id']
+      new_dict[key] = doctor
+      count = count + 1
+
+  return new_dict
+
+def read_doctors_by_email(doctor_email):
+
+  result = supabase.table("medicos").select("*").eq("email",doctor_email).execute()
+
+  user = result.data
+  result_dict = {}
+
+  for d in user:
+      result_dict.update(d)
+
+  return result_dict['id']
+
+def read_doctors_by_id(id):
+
+  result = supabase.table("medicos").select("*").eq("id",id).execute()
+
+  user = result.data
+  result_dict = {}
+
+  for d in user:
+      result_dict.update(d)
+      
+  return result_dict
 # custom_schema_query = """
 # GRANT USAGE ON SCHEMA mfr_questionarios TO anon, authenticated, service_role;
 # """
@@ -32,6 +71,7 @@ def write_doctor_to_db(data):
       "apelido": data["lastName"],
       "numero_ordem": data["docID"],
       "email": data["email"],
+      "password": generate_password_hash(data["doctorPassword"], method='pbkdf2:sha256'),
       "local_trabalho": data["hospitalAdress"]})
     .execute()
   )
