@@ -30,7 +30,7 @@ def load_user(id):
 
 @app.route("/")
 def home_page():
-    return render_template("home.html")
+    return render_template("home.html", message = '')
 
 ######################## DOCTOR ###############################
 @app.route("/doctor_login")
@@ -65,7 +65,7 @@ def protected(doctor_name):
 @app.route('/doctor_logout')
 def doctor_logout():
     logout_user()
-    return 'Logged out'
+    return render_template("home.html", message = 'Logged out') 
 
 @app.route("/doctor_signin")
 def doctor_signin():
@@ -87,7 +87,7 @@ def patient_register():
 @app.route("/patient_register_complete", methods=['post'])
 def patient_register_complete():
     data = request.form
-    write_patient_to_db(data)
+    write_patient_to_db(data, current_user['id'])
     return render_template('patient_register_successfull.html', 
          application=data)
 

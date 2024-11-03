@@ -76,10 +76,11 @@ def write_doctor_to_db(data):
     .execute()
   )
 
-def write_patient_to_db(data):
+def write_patient_to_db(data, doctorID):
   response = (
     supabase.table("utentes")
     .insert({
+      "medico_id": doctorID, 
       "nome": data["firstName"], 
       "apelido": data["lastName"],
       "numero_utente": data["patientID"],
