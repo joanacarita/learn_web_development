@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My MFR</title>  
+    {% include 'bootstrap.html' %}
+  </head>  
+    <body>
+        <form action="{{url_for('patient_form_selected_url')}}">
+            <h1 class="title">
+                Welcome, {{ name }}!
+            </h1>
+            <div class="col-md-4">
+                <label for="dropdown_patient_id" class="form-label">Paciente</label>
+                <select name="dropdown_patient_id">
+                    {% for key, value in users.items() %}
+                        <option value="{{ value.id }}">{{ value.nome~ ' '~value.apelido }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                Selecionar uma opção.
+                </div>
+            </div>
+            <br>
+            <div class="col-md-4">
+                <label for="formOptions" class="form-label">Formulário</label>
+                <select class="form-select" name="formOptions" required>
+                    {% for value in form_names %}
+                    <option>{{ value }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                Selecionar uma opção.
+                </div>
+            </div>
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Seguinte</button>
+        </form> 
+    </body>
+</html>

@@ -55,12 +55,12 @@ def doctor_login_completed():
     
     # if the above check passes, then we know the user has the right credentials
     
-    return render_template("protected.html", name=current_user.nome)
+    return render_template("doctor_home_page_protected.html", name=current_user.nome)
 
-@app.route('/protected')
+@app.route('/doctor_home_page_protected')
 @login_required
-def protected(doctor_name):
-    return render_template('protected.html', name=doctor_name)
+def doctor_home_page_protected(doctor_name):
+    return render_template('doctor_home_page_protected.html', name=doctor_name)
 
 @app.route('/doctor_logout')
 def doctor_logout():
@@ -95,7 +95,30 @@ def patient_register_complete():
 
 @app.route("/formulario_koos")
 def formulario_koos():
-    return render_template("KOOS_Joelho.html", radio_options = const_koos_12_crf(), users = read_users())
+    return render_template("KOOS_Joelho.html", form_name = Form_KOOS_Joelho, radio_options = const_koos_12_crf(), users = read_users(current_user['id']))
+
+@app.route("/patient_form_combo")
+def patient_form_combo():
+    return render_template("patient_form_combo.html", name = current_user['nome'], form_names = Form_Names, users = read_users(current_user['id']))
+
+@app.route("/patient_form_selected", methods=['post'])
+def patient_form_selected():
+    data = request.form
+    if data['formOptions'] == 'KOOS Joelho':
+        return render_template("KOOS_Joelho.html", form_name = Form_KOOS_Joelho, radio_options = const_koos_12_crf(), users = read_users(current_user['id']), patientID = data['dropdown_patient_id'])
+    else:
+        return render_template("patient_form_combo.html", name = current_user['nome'], form_names = Form_Names, users = read_users(current_user['id']))
+
+
+@app.route("/patient_form_selected_url")
+def patient_form_selected_url():
+    formOptions = request.args.get('formOptions')
+    dropdown_patient_id = request.args.get('dropdown_patient_id')
+    if formOptions == 'KOOS Joelho':
+        return render_template("KOOS_Joelho.html", form_name = formOptions, radio_options = const_koos_12_crf(), users = read_users(current_user['id']), patientID = dropdown_patient_id)
+    else:
+        return render_template("patient_form_combo.html", name = current_user['nome'], form_names = Form_Names, users = read_users(current_user['id']))
+
 
 @app.route("/guardar_quest", methods=['post'])
 def guardarQuest():

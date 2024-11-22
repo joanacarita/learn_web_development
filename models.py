@@ -7,8 +7,6 @@ class User(UserMixin):
     user_database = read_doctors()
 
     def __init__(self, id, email, numero_ordem, nome, apelido):
-        # self.id = username
-        # self.password = password
         self.id = id
         self.email = email
         self.numero_ordem = numero_ordem

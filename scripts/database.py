@@ -6,8 +6,8 @@ url: str = 'https://rmifubwuwvkiawgakwno.supabase.co'
 key: str = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtaWZ1Ynd1d3ZraWF3Z2Frd25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg4MTcwNDksImV4cCI6MjA0NDM5MzA0OX0.6ZDINmoFFgYVzEENBaGyWB1XfMjqBqbgURsNC8SbEoQ'
 supabase: Client = create_client(url, key)
 
-def read_users():
-    result = supabase.table("utentes").select("id", "nome", "apelido").execute()
+def read_users(doctorID):
+    result = supabase.table("utentes").select("id", "nome", "apelido").eq("medico_id", doctorID).execute()
 
     new_dict = {}
     count = 1

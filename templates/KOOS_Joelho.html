@@ -12,15 +12,22 @@
         <input type="text" class="form-control" name="nome_questionario" id="nome_questionario" placeholder="KOOS Joelho"> 
       </div>
 
-      <script type="text/javascript">
-        document.getElementById('nome_questionario').value = 'KOOS Joelho';
-      </script>
+      <div class="col-md-4" id="DIV_patientID" style="display: block;">
+        <label for="dropdown_user_id" class="form-label">Paciente</label>
+        <select name="dropdown_user_id" id="ID_dropdown_user_id">
+          {% for key, value in users.items() %}
+              <option value="{{ value.id }}" >{{ value.nome~ ' '~value.apelido }}</option>
+          {% endfor %}
+        </select>
+        <div class="invalid-feedback">
+        Selecionar uma opção.
+        </div>
+    </div>
 
-      <select name="dropdown_user_id">
-        {% for key, value in users.items() %}
-            <option value="{{ value.id }}">{{ value.nome~ ' '~value.apelido }}</option>
-        {% endfor %}
-      </select>
+      <script type="text/javascript">
+        document.getElementById('nome_questionario').value = "{{form_name}}";        
+        document.querySelector('#ID_dropdown_user_id option[value="{{patientID}}"]').selected = true;       
+      </script>
 
       <div class="result" >
         {% for num_perg, perg in radio_options.items() %}   

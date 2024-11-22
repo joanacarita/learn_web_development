@@ -21,3 +21,10 @@ def const_koos_12_crf():
     }
 
     return dict_perg_resp
+
+### Constant Values
+Form_KOOS_Joelho = 'KOOS Joelho'
+
+
+### Constant List of Values
+Form_Names = [Form_KOOS_Joelho, 'Outros']
