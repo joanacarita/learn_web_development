@@ -3,16 +3,20 @@
   <head>
     <title>QUESTIONÁRIO KOOS SOBRE O JOELHO</title>  
     {% include 'bootstrap.html' %}
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
   </head>
   <body>
+
     <form action="/guardar_quest" method="post">
 
       <div class="col-12" style="display: none;">
-        <label for="nome_questionario" class="form-label">Nome Questionário </label>
-        <input type="text" class="form-control" name="nome_questionario" id="nome_questionario" placeholder="KOOS Joelho"> 
+        <label for="nome_questionario" class="form-label" >Nome Questionário </label>
+        <input type="text" class="form-control" name="nome_questionario" id="nome_questionario"> 
       </div>
 
-      <div class="col-md-4" id="DIV_patientID" style="display: block;">
+      <div class="col-md-4" id="DIV_patientID" style="display: none;">
         <label for="dropdown_user_id" class="form-label">Paciente</label>
         <select name="dropdown_user_id" id="ID_dropdown_user_id">
           {% for key, value in users.items() %}
@@ -24,13 +28,12 @@
         </div>
     </div>
 
-      <script type="text/javascript">
-        document.getElementById('nome_questionario').value = "{{form_name}}";        
-        document.querySelector('#ID_dropdown_user_id option[value="{{patientID}}"]').selected = true;       
-      </script>
-
+    <div class="col-12">
+      <p id="chosen_patientID_text"> </p>
+    </div>
+      
       <div class="result" >
-        {% for num_perg, perg in radio_options.items() %}   
+          {% for num_perg, perg in radio_options.items() %}   
         <div >
             {{perg.pergunta}}
             <br>
@@ -46,6 +49,14 @@
         </div>
         {% endfor %}
       </div>
+
+      <script type="text/javascript">
+        document.getElementById('nome_questionario').value = "{{form_name}}";        
+        document.querySelector('#ID_dropdown_user_id option[value="{{patientID}}"]').selected = true;     
+        var patient_name = document.querySelector('#ID_dropdown_user_id option[value="{{patientID}}"]').innerText 
+        document.getElementById('chosen_patientID_text').innerText = patient_name;        
+
+      </script>
 
       <hr class="my-4">
 

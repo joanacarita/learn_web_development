@@ -3,3 +3,5 @@ gunicorn
 supabase
 flask_session
 flask_login
+cryptography.fernet
+flask_simple_crypt

@@ -3,6 +3,7 @@
   <head>
     <title>My MFR</title>  
     {% include 'bootstrap.html' %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   </head>  
     <body>
         <form action="{{url_for('patient_form_selected_url')}}">
@@ -10,8 +11,9 @@
                 Welcome, {{ name }}!
             </h1>
             <div class="col-md-4">
-                <label for="dropdown_patient_id" class="form-label">Paciente</label>
-                <select name="dropdown_patient_id">
+                <label for="dropdown_patientID" class="form-label">Paciente</label>
+                <select id="dropdown_patientID" onchange="patientIDChanged()" >
+                    <option value="">Selecionar...</option>
                     {% for key, value in users.items() %}
                         <option value="{{ value.id }}">{{ value.nome~ ' '~value.apelido }}</option>
                     {% endfor %}
@@ -20,10 +22,16 @@
                 Selecionar uma opção.
                 </div>
             </div>
+            
+            <br>
+            <div class="col-12" style="display: none;">
+                <input type="text" class="form-control" name="chosen_patientID" id="chosen_patientID"> 
+              </div>
             <br>
             <div class="col-md-4">
-                <label for="formOptions" class="form-label">Formulário</label>
-                <select class="form-select" name="formOptions" required>
+                <label for="dropdown_formOptions" class="form-label">Formulário</label>
+                <select class="form-select" id="dropdown_formOptions" onchange="formOptionsChanged()" required>
+                    <option value="">Selecionar...</option>
                     {% for value in form_names %}
                     <option>{{ value }}</option>
                     {% endfor %}
@@ -32,6 +40,43 @@
                 Selecionar uma opção.
                 </div>
             </div>
+            <br>
+            <div class="col-12" style="display: none;">
+                <input type="text" class="form-control" name="chosen_form" id="chosen_form"> 
+              </div>
+
+              <script> 
+              function patientIDChanged() {
+                const patientID = document.getElementById('dropdown_patientID').value; 
+                const input_key = '{{ key }}'; 
+                
+                key = CryptoJS.enc.Utf8.parse(input_key);
+        
+                // Replace with the same key used in the server 
+                // Decrypt and display the data 
+                var encrypted = CryptoJS.AES.encrypt(patientID, key, {mode: CryptoJS.mode.ECB});
+                encrypted =encrypted.toString();
+        
+                document.getElementById('chosen_patientID').value = encrypted;  
+              }
+              </script>
+
+            <script> 
+                function formOptionsChanged() {
+                const formName = document.getElementById('dropdown_formOptions').value; 
+                const input_key = '{{ key }}'; 
+                
+                key = CryptoJS.enc.Utf8.parse(input_key);
+
+                // Replace with the same key used in the server 
+                // Decrypt and display the data 
+                var encrypted = CryptoJS.AES.encrypt(formName, key, {mode: CryptoJS.mode.ECB});
+                encrypted =encrypted.toString();
+
+                document.getElementById('chosen_form').value = encrypted;  
+                }
+            </script>
+
             <button class="w-100 btn btn-primary btn-lg" type="submit">Seguinte</button>
         </form> 
     </body>

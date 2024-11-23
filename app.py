@@ -5,6 +5,13 @@ from scripts.constantes import *
 from flask_session import Session
 from flask_login import LoginManager, login_user, current_user, UserMixin, login_required, logout_user
 from models import User
+from scripts.encrypt_url import *
+import base64
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad,unpad
+
+from Crypto.Random import get_random_bytes
+
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -16,6 +23,12 @@ login_manager = LoginManager()
 login_manager.login_view = 'doctor_login'
 login_manager.init_app(app)
 
+from cryptography.fernet import Fernet
+import urllib.parse
+
+# Generate a key and instantiate a Fernet instance (only do this once)
+key_fernet = Fernet.generate_key()
+cipher_suite = Fernet(key)
 
 @login_manager.user_loader
 def load_user(id):
@@ -92,6 +105,13 @@ def patient_register_complete():
          application=data)
 
 ######################## FORMS ###############################
+#FIX Key
+key =  'AAAAAAAAAAAAAAAA' #16 char for AES128
+
+def decrypt_ecb(enc, key):
+        enc = base64.b64decode(enc)
+        cipher = AES.new(key.encode('utf-8'), AES.MODE_ECB)
+        return unpad(cipher.decrypt(enc),16)
 
 @app.route("/formulario_koos")
 def formulario_koos():
@@ -99,7 +119,8 @@ def formulario_koos():
 
 @app.route("/patient_form_combo")
 def patient_form_combo():
-    return render_template("patient_form_combo.html", name = current_user['nome'], form_names = Form_Names, users = read_users(current_user['id']))
+    return render_template("patient_form_combo.html", key = key, name = current_user['nome'], form_names = Form_Names, users = read_users(current_user['id']))
+
 
 @app.route("/patient_form_selected", methods=['post'])
 def patient_form_selected():
@@ -112,10 +133,14 @@ def patient_form_selected():
 
 @app.route("/patient_form_selected_url")
 def patient_form_selected_url():
-    formOptions = request.args.get('formOptions')
-    dropdown_patient_id = request.args.get('dropdown_patient_id')
-    if formOptions == 'KOOS Joelho':
-        return render_template("KOOS_Joelho.html", form_name = formOptions, radio_options = const_koos_12_crf(), users = read_users(current_user['id']), patientID = dropdown_patient_id)
+    formOptions = request.args.get('chosen_form')
+    dropdown_patient_id = request.args.get('chosen_patientID')
+
+    decrypt_form_name = decrypt_ecb(formOptions, key).decode("utf-8", "ignore")
+    decrypted_patient_id = decrypt_ecb(dropdown_patient_id, key).decode("utf-8", "ignore")
+
+    if decrypt_form_name == 'KOOS Joelho':
+        return render_template("KOOS_Joelho.html", form_name = decrypt_form_name, radio_options = const_koos_12_crf(), users = read_users(current_user['id']), patientID = decrypted_patient_id)
     else:
         return render_template("patient_form_combo.html", name = current_user['nome'], form_names = Form_Names, users = read_users(current_user['id']))
 
