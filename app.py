@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, flash, session
+from flask import Flask, jsonify, redirect, render_template, request, flash, session, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from scripts.database import *
 from scripts.constantes import *
@@ -8,9 +8,8 @@ from models import User
 from scripts.encrypt_url import *
 import base64
 from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad,unpad
-
-from Crypto.Random import get_random_bytes
+from Crypto.Util.Padding import unpad
+from flask_mail import Mail, Message 
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
@@ -23,12 +22,16 @@ login_manager = LoginManager()
 login_manager.login_view = 'doctor_login'
 login_manager.init_app(app)
 
-from cryptography.fernet import Fernet
-import urllib.parse
+mail = Mail(app) # instantiate the mail class 
 
-# Generate a key and instantiate a Fernet instance (only do this once)
-key_fernet = Fernet.generate_key()
-cipher_suite = Fernet(key)
+# configuration of mail 
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'joanacarita@gmail.com'
+app.config['MAIL_PASSWORD'] = 'MAISemelhor18!'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app) 
 
 @login_manager.user_loader
 def load_user(id):
@@ -130,6 +133,27 @@ def patient_form_selected():
     else:
         return render_template("patient_form_combo.html", name = current_user['nome'], form_names = Form_Names, users = read_users(current_user['id']))
 
+@app.route("/send_quest")
+def send_quest():
+    formOptions = request.args.get('chosen_form')
+    dropdown_patient_id = request.args.get('chosen_patientID')
+
+    test_url = url_for('patient_form_selected_url', chosen_form=formOptions, chosen_patientID=dropdown_patient_id, _external=True)
+
+    return render_template("test_url.html", url = test_url)
+
+@app.route("/test_url", methods=['post'])
+def test_url():
+    data = request.form
+
+    msg = Message( 
+                    'Hello', 
+                    recipients = ['joanacarita@gmail.com'] 
+                ) 
+    msg.body = 'Hello Flask message sent from Flask-Mail'
+    mail.send(msg) 
+
+    return redirect(data['url_test'], code=302)
 
 @app.route("/patient_form_selected_url")
 def patient_form_selected_url():

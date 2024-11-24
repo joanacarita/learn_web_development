@@ -6,7 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   </head>  
     <body>
-        <form action="{{url_for('patient_form_selected_url')}}">
+        <form action="/send_quest" method="get">
             <h1 class="title">
                 Welcome, {{ name }}!
             </h1>
@@ -22,8 +22,6 @@
                 Selecionar uma opção.
                 </div>
             </div>
-            
-            <br>
             <div class="col-12" style="display: none;">
                 <input type="text" class="form-control" name="chosen_patientID" id="chosen_patientID"> 
               </div>

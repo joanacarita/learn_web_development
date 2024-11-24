@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Questionário submetido com sucesso</title>  
+    {% include 'bootstrap.html' %}
+  </head>
+  <body>
+    <form action="/test_url" method="post">
+      <div class="container">
+        <h1 class="text-center mt-2 mb-4">
+          My MFR
+        </h1>
+
+        <p name="url_test_2" id="url_test_2"> {{url}} </p>
+        <br>
+        <div class="col-12">
+          <label for="url_test" class="form-label" >URL </label>
+          <input type="text" class="form-control" name="url_test" id="url_test" value="{{url}}"> 
+        </div>
+     
+      </div>
+      <button class="w-100 btn btn-primary btn-lg" type="submit">Go To URL</button>
+    </form> 
+  </body>
+</html>
