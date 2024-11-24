@@ -3,22 +3,31 @@
   <head>
     <title>My MFR</title>  
     {% include 'bootstrap.html' %}
+    <script src="https://cdn.tailwindcss.com"></script>
+
   </head>  
     <body>
+      {% include 'style_nav_home.html' %}
+      {% include 'style_dashboard.html' %}
+
+
+
+
+
         <h1 class="title">
             Welcome, {{ name }}!
         </h1>
-        <div>
+        <!-- <div>
             <a href="/doctor_logout" type="button" class="btn btn-outline-primary float-right align-middle" >Médico - Log Out</a>
-          </div>
+          </div> -->
           <br>
-          <div>
+          <!-- <div>
             <a href="/patient_register" type="button" class="btn btn-outline-primary float-right align-middle" >Registo Utente</a>
-          </div>
+          </div> -->
           <br>
-          <div>
+          <!-- <div>
             <a href="/formulario_koos" type="button" class="btn btn-outline-primary float-right align-middle" >Formulário - KOOS Joelho</a>
-          </div>
+          </div> -->
           <br>
           <div>
             <a href="/patient_form_combo" type="button" class="btn btn-outline-primary float-right align-middle" >Paciente - Formulário</a>
