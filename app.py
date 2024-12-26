@@ -5,7 +5,6 @@ from scripts.constantes import *
 from flask_session import Session
 from flask_login import LoginManager, login_user, current_user, UserMixin, login_required, logout_user
 from models import User
-from scripts.encrypt_url import *
 import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad

@@ -3,6 +3,8 @@
   <head>
     <title>My MFR</title>  
     {% include 'bootstrap.html' %}
+    <script src="https://cdn.tailwindcss.com"></script>
+
   </head>  
     <body>
         {% with messages = get_flashed_messages() %}
@@ -12,30 +14,20 @@
                 </div>
             {% endif %}
         {% endwith %}
-        <div class="column is-4 is-offset-4">
-            <h3 class="title">Login</h3>
-            <div class="box">
-                <form method="POST" action="/doctor_login_completed">
-                    <div class="field">
-                        <div class="control">
-                            <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
-                        </div>
-                    </div>
 
-                    <div class="field">
-                        <div class="control">
-                            <input class="input is-large" type="password" name="password" placeholder="Password">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="checkbox">
-                            <input type="checkbox" name="remember">
-                            Remember me
-                        </label>
-                    </div>
-                    <button class="button is-block is-info is-large is-fullwidth">Login</button>
-                </form>
-            </div>
+        {% include 'style_nav_home.html' %}
+            
+        {% include 'style_login.html' %}
+
+       
+
+
+        <div class="column is-4 is-offset-4">
+
+
+
+
+
         </div>
     </body>
 </html>
