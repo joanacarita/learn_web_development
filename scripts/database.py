@@ -42,7 +42,10 @@ def read_doctors_by_email(doctor_email):
   result_dict = {}
 
   for d in user:
-      result_dict.update(d)
+    result_dict.update(d)
+
+  if not result_dict:
+    return None
 
   return result_dict['id']
 

@@ -5,3 +5,5 @@ flask_session
 flask_login
 flask_simple_crypt
 Flask-Mail
+pycryptodome
+crypto

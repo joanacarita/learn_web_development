@@ -57,7 +57,12 @@ def doctor_login_completed():
     data = request.form
     
     doctor_id = read_doctors_by_email(data['email'])
-    doctor = User.get(doctor_id)
+
+    if doctor_id == None:
+        flash('Please check your login details and try again.')
+        return render_template("doctor_login.html")
+    else:
+        doctor = User.get(doctor_id)
 
     # check if the doctor actually exists
     # take the doctor-supplied password, hash it, and compare it to the hashed password in the database
